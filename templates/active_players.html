@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Players - Fluxion Gaming Portal</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta http-equiv="refresh" content="5">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1><i class="fas fa-gamepad me-2"></i>Active Players</h1>
+        <div class="row">
+            {% for sid, data in players.items() %}
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Player {{ loop.index }}</h5>
+                        <p class="card-text">
+                            <a href="/profile/{{ data.machine_id }}" class="text-decoration-none">
+                                <small class="text-muted">Machine ID: {{ data.machine_id }}</small>
+                            </a><br>
+                            Playing: <strong>{{ data.game }}</strong>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No active players at the moment.
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="/" class="btn btn-primary mt-3">
+            <i class="fas fa-home me-2"></i>Back to Games
+        </a>
+    </div>
+</body>
+</html>

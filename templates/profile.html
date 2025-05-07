@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile - Fluxion Gaming Portal</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1><i class="fas fa-user me-2"></i>User Profile</h1>
+        <p class="lead">Machine ID: {{ machine_id }}</p>
+
+        <div class="row mt-4">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <i class="fas fa-gamepad me-2"></i>Played Games
+                    </div>
+                    <div class="card-body">
+                        {% if profile.played %}
+                        <div class="list-group">
+                            {% for game in profile.played %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{ game }}
+                                <span class="badge bg-primary float-end">{{ games[game].Plays }} plays</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No games played yet</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <i class="fas fa-thumbs-up me-2"></i>Liked Games
+                    </div>
+                    <div class="card-body">
+                        {% if profile.likes %}
+                        <div class="list-group">
+                            {% for game in profile.likes %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{ game }}
+                                <span class="badge bg-success float-end">{{ games[game].Likes }} likes</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No liked games yet</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        <i class="fas fa-star me-2"></i>Favorite Games
+                    </div>
+                    <div class="card-body">
+                        {% if profile.favorites %}
+                        <div class="list-group">
+                            {% for game in profile.favorites %}
+                            <a href="#" class="list-group-item list-group-item-action">
+                                {{ game }}
+                                <span class="badge bg-warning float-end">{{ games[game].Favorites }} favs</span>
+                            </a>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="text-muted">No favorite games yet</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <a href="/active-players" class="btn btn-primary mt-3">
+            <i class="fas fa-users me-2"></i>Back to Active Players
+        </a>
+    </div>
+</body>
+</html>
