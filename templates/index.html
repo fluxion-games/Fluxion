@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fluxion Gaming Portal</title>
+    <!-- Bootstrap CSS with Replit theme -->
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-gamepad me-2"></i>
+                Fluxion
+            </a>
+            <div class="ms-auto d-flex align-items-center">
+                <div class="online-users-badge">
+                    <i class="fas fa-users me-1"></i>
+                    <span id="online-users-count">0</span> online
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row mb-4 animate__animated animate__fadeIn">
+            <div class="col">
+                <h1 class="display-4 fw-bold">Welcome to <span class="text-primary">Fluxion</span></h1>
+                <p class="lead">Discover, play, and share amazing games with the world!</p>
+            </div>
+        </div>
+
+        <!-- Filter Controls -->
+        <div class="row mb-4 animate__animated animate__fadeIn animate__delay-1s">
+            <div class="col-12">
+                <div class="d-flex flex-wrap gap-2 align-items-center">
+                    <div class="me-auto">
+                        <div class="input-group">
+                            <input type="text" id="search-input" class="form-control" placeholder="Search games...">
+                            <button class="btn btn-outline-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="tag-filters" class="tag-filters d-flex flex-wrap gap-2">
+                        <!-- Tags will be populated dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Loading Area -->
+        <div id="game-container" class="game-container mb-4 animate__animated animate__fadeIn" style="display: none;">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 id="current-game-title" class="mb-0"><i class="fas fa-gamepad me-2"></i>Game Title</h5>
+                    <div class="game-controls">
+                        <button id="refresh-game-btn" class="btn btn-sm btn-outline-primary me-2" title="Refresh Game">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button id="fullscreen-game-btn" class="btn btn-sm btn-outline-success me-2" title="Fullscreen">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                        <button id="close-game-btn" class="btn btn-sm btn-outline-danger" title="Close Game">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <div id="game-frame-container">
+                        <!-- Game iframe will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="row" id="games-grid">
+            <div class="col-12 text-center py-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-3">Loading amazing games for you...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="notification-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto" id="toast-title">Notification</strong>
+                <small id="toast-time">Just now</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-message">
+                Game action successfully performed!
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-bolt me-2"></i>Fluxion Gaming Portal</h5>
+                    <p class="text-muted">Your gateway to incredible gaming experiences.</p>
+                    <div class="d-flex gap-3 social-links">
+                        <a href="#" class="text-decoration-none"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="fab fa-discord fa-lg"></i></a>
+                        <a href="#" class="text-decoration-none"><i class="fab fa-github fa-lg"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-0 text-muted">&copy; 2025 Fluxion. All rights reserved.</p>
+                    <p class="text-muted">Made with <i class="fas fa-heart text-danger"></i> for gamers</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Template for game card -->
+    <template id="game-card-template">
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 animate__animated animate__fadeIn game-card-wrapper">
+            <div class="card h-100 game-card">
+                <div class="card-img-top-container">
+                    <img src="" alt="" class="card-img-top game-thumbnail">
+                    <div class="game-overlay">
+                        <button class="btn btn-lg btn-primary play-overlay-btn">
+                            <i class="fas fa-play-circle fa-2x"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title game-title">Game Title</h5>
+                    <div class="game-tags mb-3">
+                        <!-- Tags will be populated dynamically -->
+                    </div>
+                    <div class="game-stats d-flex justify-content-between mb-3">
+                        <span class="badge bg-primary">
+                            <i class="fas fa-play me-1"></i> <span class="plays-count">0</span>
+                        </span>
+                        <span class="badge bg-success">
+                            <i class="fas fa-thumbs-up me-1"></i> <span class="likes-count">0</span>
+                        </span>
+                        <span class="badge bg-warning">
+                            <i class="fas fa-star me-1"></i> <span class="favorites-count">0</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <button class="btn btn-sm play-btn">
+                            <i class="fas fa-play"></i> Play Now
+                        </button>
+                        <div>
+                            <button class="btn btn-sm btn-outline-success like-btn" title="Like this game">
+                                <i class="fas fa-thumbs-up"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-warning favorite-btn" title="Add to favorites">
+                                <i class="fas fa-star"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Loading Animation Template -->
+    <template id="loading-animation-template">
+        <div class="col-12 text-center py-5">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-3">Loading amazing games for you...</p>
+        </div>
+    </template>
+
+    <!-- Socket.IO -->
+    <script src="https://cdn.socket.io/4.6.0/socket.io.min.js"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
